@@ -73,6 +73,9 @@ void UHealthComponent::Die()
 
 void UHealthComponent::HandleTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
+	bool isProjectileFromPlayer = InstigatedBy->GetPawn()->IsPlayerControlled();
+
+	if (isOnPlayer ^ isProjectileFromPlayer) return; // if the damage is from the same side, ignore it
 	TakeDamage(Damage);
 }
 
