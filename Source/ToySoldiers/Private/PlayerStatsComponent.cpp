@@ -30,6 +30,8 @@ void UPlayerStatsComponent::LevelUp(int NewLevel)
 	OnLevelUp.Broadcast(NewLevel);
 
 	// CONTAINS THE FORMULA FOR CALCULATING THE XP NEEDED FOR THE NEXT LEVEL, CAN BE CHANGED TO WHATEVER FORMULA YOU WANT
+	// https://www.desmos.com/calculator/lw4roboaa0
+	float gapBetweenLevels = 1; // given the equation is exponential. This increases the gap between levels by (gapBetweelLevels * 2) + 1. E.g if this is set to 1. Level 1 takes 1 xp, then 4, then 9 etc
 	StatData->NextLevelXP = 100.f * FMath::Pow(1.5f, NewLevel - 1);
 }
 

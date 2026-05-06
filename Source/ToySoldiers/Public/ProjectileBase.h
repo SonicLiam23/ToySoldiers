@@ -29,6 +29,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
 	bool destroyOnHit = true;
 
+	AController* InstigatorController;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -43,6 +45,16 @@ protected:
 		UPrimitiveComponent* OtherComp,
 		FVector NormalImpulse,
 		const FHitResult& Hit
+	);
+
+	UFUNCTION()
+	void OnOverlap(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult
 	);
 
 	UFUNCTION(BlueprintImplementableEvent)

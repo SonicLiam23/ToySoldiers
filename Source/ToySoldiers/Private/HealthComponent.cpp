@@ -23,7 +23,6 @@ void UHealthComponent::BeginPlay()
 	// ...
 	Owner = GetOwner();
 	Owner->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::HandleTakeAnyDamage);
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Player health Setup!"));
 
 	isOnPlayer = false;
 	if (APawn* Pawn = Cast<APawn>(Owner))
@@ -73,10 +72,15 @@ void UHealthComponent::Die()
 
 void UHealthComponent::HandleTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
+	if (InstigatedBy == nullptr)
+	{
+		// if there is no instigator, ignore the damage
+		return;
+	}
 	bool isProjectileFromPlayer = InstigatedBy->GetPawn()->IsPlayerControlled();
 
-	if (isOnPlayer ^ isProjectileFromPlayer) return; // if the damage is from the same side, ignore it
-	TakeDamage(Damage);
+	if (isOnPlayer ^ isProjectileFromPlayer) 
+		TakeDamage(Damage);
 }
 
 // Called every frame

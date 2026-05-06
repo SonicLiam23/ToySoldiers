@@ -38,20 +38,37 @@ void AProjectileBase::BeginPlay()
 	if (collisionComponent)
 	{
 		collisionComponent->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
+		collisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AProjectileBase::OnOverlap);
 	}
 	
 }
 
 void AProjectileBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+	
+	if (!OtherActor || OtherActor == this || OtherActor == projOwner) return;
+	if (actorsToIgnore.Contains(OtherActor)) return;
+	actorsToIgnore.Add(OtherActor);
+	
+	
+	UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, nullptr);
+
+	OnProjectileImpact(Hit);
+
+	if (destroyOnHit)
+		Destroy();
+}
+
+void AProjectileBase::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
 	if (!OtherActor || OtherActor == this || OtherActor == projOwner) return;
 	if (actorsToIgnore.Contains(OtherActor)) return;
 	actorsToIgnore.Add(OtherActor);
 
 
-	UGameplayStatics::ApplyDamage(OtherActor, Damage, nullptr, this, nullptr);
+	UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, nullptr);
 
-	OnProjectileImpact(Hit);
+	OnProjectileImpact(SweepResult);
 
 	if (destroyOnHit)
 		Destroy();
