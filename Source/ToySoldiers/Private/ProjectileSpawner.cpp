@@ -19,10 +19,9 @@ void UProjectileSpawner::SpawnProjectile()
 {
 	if (IsValid(ProjectileToSpawn))
 	{
-		FVector spawnLocation = GetComponentLocation();
-		FRotator spawnRotation = GetOwner()->GetActorRotation();
-		AProjectileBase* spawned = GetWorld()->SpawnActor<AProjectileBase>(ProjectileToSpawn, spawnLocation, spawnRotation);
+		AProjectileBase* spawned = GetWorld()->SpawnActorDeferred<AProjectileBase>(ProjectileToSpawn, GetComponentTransform());
 		spawned->InstigatorController = GetOwner()->GetInstigatorController();
+		spawned->FinishSpawning(GetComponentTransform());
 	}
 }
 

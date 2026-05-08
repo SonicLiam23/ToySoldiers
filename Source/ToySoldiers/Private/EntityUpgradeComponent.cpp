@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PlayerStatsComponent.h"
+#include "EntityUpgradeComponent.h"
 
 // Sets default values for this component's properties
-UPlayerStatsComponent::UPlayerStatsComponent()
+UEntityUpgradeComponent::UEntityUpgradeComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -12,12 +12,12 @@ UPlayerStatsComponent::UPlayerStatsComponent()
 
 	// ...
 
-	StatData = CreateDefaultSubobject<UPlayerStats>(TEXT("PlayerStats"));
+	StatData = CreateDefaultSubobject<UStatMultipliers>(TEXT("PlayerStats"));
 }
 
 
 // Called when the game starts
-void UPlayerStatsComponent::BeginPlay()
+void UEntityUpgradeComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -25,7 +25,7 @@ void UPlayerStatsComponent::BeginPlay()
 	
 }
 
-void UPlayerStatsComponent::LevelUp(int NewLevel)
+void UEntityUpgradeComponent::LevelUp(int NewLevel)
 {
 	OnLevelUp.Broadcast(NewLevel);
 
@@ -35,7 +35,7 @@ void UPlayerStatsComponent::LevelUp(int NewLevel)
 	StatData->NextLevelXP = 100.f * FMath::Pow(1.5f, NewLevel - 1);
 }
 
-void UPlayerStatsComponent::GainXP(float XPAmount)
+void UEntityUpgradeComponent::GainXP(float XPAmount)
 {
 	StatData->CurrentXP += XPAmount;
 	OnGainXP.Broadcast(XPAmount);
@@ -48,7 +48,7 @@ void UPlayerStatsComponent::GainXP(float XPAmount)
 
 
 // Called every frame
-void UPlayerStatsComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UEntityUpgradeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 

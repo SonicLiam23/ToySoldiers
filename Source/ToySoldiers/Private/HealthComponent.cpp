@@ -3,6 +3,9 @@
 
 #include "HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "EntityUpgradeComponent.h"
+
+UEntityUpgradeComponent* UHealthComponent::playerStatsComponent;
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -30,6 +33,7 @@ void UHealthComponent::BeginPlay()
 		if (Pawn->IsPlayerControlled())
 		{
 			isOnPlayer = true;
+			playerStatsComponent = Cast<UEntityUpgradeComponent>(Pawn->GetComponentByClass(UEntityUpgradeComponent::StaticClass()));
 		}
 	}
 }
@@ -60,7 +64,7 @@ void UHealthComponent::Die()
 
 	if (!isOnPlayer)
 	{
-		// make player get XP, currently working on stats class
+		playerStatsComponent->GainXP(XPValue);
 	}
 
 	if (Owner && AutoDestroyOnDeath)

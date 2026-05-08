@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "PlayerStats.generated.h"
+#include "StatMultipliers.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class TOYSOLDIERS_API UPlayerStats : public UPrimaryDataAsset
+class TOYSOLDIERS_API UStatMultipliers : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
 

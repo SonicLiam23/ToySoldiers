@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
+class UEntityUpgradeComponent;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTakeDamageSignature, float, DamageAmount);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnHealSignature, float, HealAmount, bool, IgnoreMaxHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathSignature);
@@ -56,6 +58,11 @@ protected:
 	);
 
 	bool isOnPlayer;
+	static UEntityUpgradeComponent* playerStatsComponent;
+
+	// IM AWARE THIS IS IN THE WRONG PLACE AND ITS STUPID BUT THATS THE IDEA OF A PROTOTYPE I GUESS XD
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Experience")
+	int XPValue;
 
 public:	
 	// Called every frame
