@@ -8,6 +8,8 @@
 
 #include "ProjectileSpawner.generated.h"
 
+class UStatMultipliers;
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TOYSOLDIERS_API UProjectileSpawner : public USceneComponent
 {
@@ -27,6 +29,8 @@ protected:
 	TSubclassOf<AProjectileBase> ProjectileToSpawn;// = AProjectileBase::StaticClass();
 
 	UFUNCTION(BlueprintCallable)
-	void SpawnProjectile();
+	AProjectileBase* SpawnProjectile();
+
+	UStatMultipliers* statMultipliers;
 
 };
