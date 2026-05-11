@@ -24,6 +24,7 @@ void UProjectileSpawner::BeginPlay()
 	timeOfLastShot = 0.f;
 	UEntityUpgradeComponent* upgradeComp = GetOwner()->FindComponentByClass<UEntityUpgradeComponent>();
 
+	// random comment
 	if (upgradeComp)
 	{
 		statMultipliers = upgradeComp->StatData;
