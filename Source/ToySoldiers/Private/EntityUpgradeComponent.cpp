@@ -28,6 +28,12 @@ void UEntityUpgradeComponent::BeginPlay()
 	// ...
 	StatData->NextLevelXP = LEVEL_XP(StatData->PlayerLevel);
 
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("STATDATA loading"));
+	if (StatData == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("NO STATDATA"));
+	}
+
 }
 
 void UEntityUpgradeComponent::LevelUp(int NewLevel)
@@ -46,6 +52,13 @@ void UEntityUpgradeComponent::LevelUp(int NewLevel)
 
 void UEntityUpgradeComponent::GainXP(float XPAmount)
 {
+
+	if (StatData == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("NO STATDATA"));
+		return;
+	}
+
 	StatData->CurrentXP += XPAmount;
 	OnGainXP.Broadcast(XPAmount);
 
