@@ -93,15 +93,23 @@ void UHealthComponent::Die()
 
 void UHealthComponent::HandleTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-	if (InstigatedBy == nullptr)
+	if (InstigatedBy != nullptr)
 	{
-		// if there is no instigator, ignore the damage
-		return;
-	}
-	bool isProjectileFromPlayer = InstigatedBy->GetPawn()->IsPlayerControlled();
+		bool isProjectileFromPlayer;
+		if (InstigatedBy->GetPawn() != nullptr)
+		{
+			isProjectileFromPlayer = InstigatedBy->GetPawn()->IsPlayerControlled();
+		}
+		else
+		{
+			
+			// player will always have a pawn, but some AI might not, so if there is no pawn, assume its not from the player
+			isProjectileFromPlayer = false;
+		}
 
-	if (isOnPlayer ^ isProjectileFromPlayer) 
-		TakeDamage(Damage);
+		if (isOnPlayer ^ isProjectileFromPlayer)
+			TakeDamage(Damage);
+	}
 }
 
 // Called every frame
