@@ -47,12 +47,11 @@ void UHealthComponent::TakeDamage(float DamageAmount)
 	if (!isDead)
 	{
 		CurrentHealth -= DamageAmount;
+		OnTakeDamage.Broadcast(DamageAmount);
 		if (CurrentHealth <= 0.f)
 		{
 			Die();
 		}
-
-		OnTakeDamage.Broadcast(DamageAmount);
 	}
 }
 
