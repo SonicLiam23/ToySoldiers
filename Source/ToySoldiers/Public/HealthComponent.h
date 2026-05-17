@@ -20,12 +20,11 @@ class TOYSOLDIERS_API UHealthComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UHealthComponent();
+	UFUNCTION(BlueprintCallable, Category = "Health")
 	void TakeDamage(float DamageAmount);
-
-
 	UPROPERTY(BlueprintAssignable, Category = "Health")
 	FOnTakeDamageSignature OnTakeDamage;
-
+	UFUNCTION(BlueprintCallable, Category = "Health")
 	void Heal(float HealAmount, bool ignoreMaxHealth = false);
 	UPROPERTY(BlueprintAssignable, Category = "Health")
 	FOnHealSignature OnHeal;
