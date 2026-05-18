@@ -28,12 +28,6 @@ void UEntityUpgradeComponent::BeginPlay()
 	// ...
 	StatData->NextLevelXP = LEVEL_XP(StatData->PlayerLevel);
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("STATDATA loading"));
-	if (StatData == nullptr)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("NO STATDATA"));
-	}
-
 }
 
 void UEntityUpgradeComponent::LevelUp(int NewLevel)
@@ -43,11 +37,13 @@ void UEntityUpgradeComponent::LevelUp(int NewLevel)
 
 	StatData->NextLevelXP = LEVEL_XP(NewLevel);
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("level up"));
+	
 
-	StatData->GetRandomStat() += 1.f;
 
-	OnLevelUp.Broadcast(NewLevel);
+	Stat upgraded = StatData->GetRandomStat();
+
+	*upgraded.statPtr += 0.1f; // increase the stat by 10%, can be changed to whatever you want
+	OnLevelUp.Broadcast(NewLevel, upgraded.statName);
 }
 
 void UEntityUpgradeComponent::GainXP(float XPAmount)
@@ -55,17 +51,11 @@ void UEntityUpgradeComponent::GainXP(float XPAmount)
 
 	if (StatData == nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("NO STATDATA"));
 		return;
 	}
 
 	StatData->CurrentXP += XPAmount;
 	OnGainXP.Broadcast(XPAmount);
-
-
-	std::stringstream ss;
-	ss << XPAmount;
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, ss.str().c_str());
 
 
 	// process all level ups

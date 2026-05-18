@@ -6,6 +6,12 @@
 #include "Engine/DataAsset.h"
 #include "StatMultipliers.generated.h"
 
+struct Stat
+{
+	float* statPtr;
+	FText statName;
+};
+
 /**
  * 
  */
@@ -38,5 +44,5 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float PlayerLevel;
 
-	float& GetRandomStat();
+	Stat GetRandomStat();
 };

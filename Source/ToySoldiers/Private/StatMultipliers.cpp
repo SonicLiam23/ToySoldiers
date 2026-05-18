@@ -14,26 +14,36 @@ UStatMultipliers::UStatMultipliers()
 
 }
 
-float& UStatMultipliers::GetRandomStat()
+Stat UStatMultipliers::GetRandomStat()
 {
-	srand(time(NULL));
+	Stat returnVal;
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, TEXT("Level up"));
+	srand(time(NULL));
 
 	int stat = rand() % 4;
 
 	switch (stat)
 	{
 	case 0:
-		return DamageMultiplier;
+		returnVal.statPtr = &DamageMultiplier;
+		returnVal.statName = FText::FromString("Damage");
+		return returnVal;
 		break; // shouldnt need break but oh well
 
 	case 1:
-		return FireRateMultiplier;
+		returnVal.statPtr = &FireRateMultiplier;
+		returnVal.statName = FText::FromString("Fire rate");
+		return returnVal;
+		break; // shouldnt need break but oh well
 
 	case 2:
-		return MaxHealthMultiplier;
+		returnVal.statPtr = &MaxHealthMultiplier;
+		returnVal.statName = FText::FromString("Max health");
+		return returnVal;
+		break; // shouldnt need break but oh well
 	}
 
-	return DamageMultiplier;
+	returnVal.statPtr = &DamageMultiplier;
+	returnVal.statName = FText::FromString("Damage");
+	return returnVal;
 }
