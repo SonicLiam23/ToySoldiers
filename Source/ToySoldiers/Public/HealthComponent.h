@@ -20,12 +20,11 @@ class TOYSOLDIERS_API UHealthComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UHealthComponent();
+	UFUNCTION(BlueprintCallable, Category = "Health")
 	void TakeDamage(float DamageAmount);
-
-
 	UPROPERTY(BlueprintAssignable, Category = "Health")
 	FOnTakeDamageSignature OnTakeDamage;
-
+	UFUNCTION(BlueprintCallable, Category = "Health")
 	void Heal(float HealAmount, bool ignoreMaxHealth = false);
 	UPROPERTY(BlueprintAssignable, Category = "Health")
 	FOnHealSignature OnHeal;
@@ -44,11 +43,11 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health")
 	float MaxHealth = 100.f;
 	float baseMaxHealth;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health")
 	float CurrentHealth = 100.f;
 
 
@@ -68,6 +67,8 @@ protected:
 	// IM AWARE THIS IS IN THE WRONG PLACE AND ITS STUPID BUT THATS THE IDEA OF A PROTOTYPE I GUESS XD
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Experience")
 	int XPValue;
+
+	bool isDead;
 
 public:	
 	// Called every frame

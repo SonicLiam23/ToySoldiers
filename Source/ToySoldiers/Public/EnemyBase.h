@@ -17,7 +17,7 @@ public:
 	// Sets default values for this pawn's properties
 	AEnemyBase();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UHealthComponent* HealthComponent;
 
 protected:
