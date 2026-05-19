@@ -40,8 +40,6 @@ void AProjectileBase::BeginPlay()
 		collisionComponent->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
 		collisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AProjectileBase::OnOverlap);
 	}
-	if (!InstigatorController)
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Projectile Spawned"));
 }
 
 void AProjectileBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)

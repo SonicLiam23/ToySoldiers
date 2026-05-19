@@ -8,7 +8,7 @@
 
 #include "EntityUpgradeComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnLevelUpSignature, int, NewLevel);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLevelUpSignature, int, NewLevel, FText, StatName);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGainXPSignature, float, XPAmount);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -41,6 +41,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player Stats")
 	UStatMultipliers* StatData;
+
+	UFUNCTION(BlueprintPure, Category = "XP")
+	float GetCurrentXPPercentage() const { return StatData->CurrentXP  / StatData->NextLevelXP; }
+	UFUNCTION(BlueprintPure, Category = "XP")
+	float GetCurrentXP() const { return StatData->CurrentXP; }
+	UFUNCTION(BlueprintPure, Category = "XP")
+	float GetMaxXP() const { return StatData->NextLevelXP; }
 
 	// CONTAINS THE FORMULA FOR CALCULATING THE XP NEEDED FOR THE NEXT LEVEL, CAN BE CHANGED TO WHATEVER FORMULA YOU WANT
 	// https://www.desmos.com/calculator/lw4roboaa0
